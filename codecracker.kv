@@ -1,0 +1,187 @@
+#:kivy 1.0.9
+
+RootLayout:
+
+#:set BLACK (0, 0, 0)
+#:set WHITE (1, 1, 1)
+#:set RED (1, 0, 0)
+#:set YELLOW (1, 1, 0)
+#:set BLUE (0, 0, 1)
+#:set GREEN (0, 1, 0)
+#:set PURPLE (0.5, 0, 0.5)
+#:set ORANGE (1, 0.6, 0)
+#:set BROWN (0.65, 0.2, 0.65)
+#:set GREY (0.5, 0.5, 0.5)
+#:set LIGHT_GREY (0.75, 0.75, 0.75)
+#:set MAGENTA (1, 0, 1)
+#:set CYAN (0, 0.95, 1)
+#:set FOREST_GREEN (0.15, 0.5, 0.15)
+#:set MAUVE (0.9, 0.7, 1)
+#:set LIGHT_YELLOW (1, 1, 0.85)
+#:set LIGHT_ORANGE (1, 0.95, 0.85)
+#:set LIGHT_BLUE (0.8, 0.9, 0.95)
+#:set DARKER_BLUE (0.25, 0.45, 0.75)
+
+
+<RootLayout>:
+    id: root_element
+    padding: "20dp", "20dp", "20dp", "20dp"
+    spacing: "30dp"
+
+
+
+
+
+<RightPane>
+    padding: "10dp", "20dp", "10dp", "20dp"
+    spacing: "10dp"
+    orientation: "vertical"
+    Button:
+        text: "New game"
+        on_press: root.root_layout.restart()
+        background_color: DARKER_BLUE
+        background_normal: ""
+        size_hint: .5, .25
+        pos_hint: {'x': .25}
+
+    SettingsPane:
+        size_hint: 1, 3
+
+    Button:
+        text: "How to play"
+        on_press: root.root_layout.display_instructions()
+        background_color: DARKER_BLUE
+        background_normal: ""
+        size_hint: .5, .25
+        pos_hint: {'x': .25}
+
+<LeftPane>
+    spacing: "20dp"
+
+    size_hint: 1.25 , 1
+    orientation: "vertical"
+
+
+<TopFrame>
+    spacing: "10dp"
+    padding: "0dp", "10dp", "0dp", "0dp"
+    size_hint: 1, 0.5
+
+<SecretCode>
+    id: secret
+    size_hint: 2, 1
+    spacing: "10dp"
+
+# Button
+    # text: "Reveal"
+    # on_press: root.root_layout.reveal_code()
+    # background_color: DARKER_BLUE
+    # background_normal: ""
+
+<GuessesFrame>
+    size_hint: 1, 4
+    orientation: "vertical"
+    spacing: "10dp"
+    id: guesses_frame
+
+
+<InputFrame>
+    size_hint: 1, 0.5
+    spacing: "10dp"
+    padding: "0dp", "10dp", "0dp", "10dp"
+    # Guess
+        # id: current_guess
+        # size_hint: 2, 1
+    # Button
+        # text: "Submit"
+        # id: submit_btn
+        # on_press: root.root_layout.on_submit()
+        # background_color: DARKER_BLUE
+        # background_normal: ""
+
+
+<GuessLine>:
+    spacing: "20dp"
+
+<Feedback>:
+    spacing: "6dp"
+
+<FeedbackButton>
+    disabled: True
+    background_disabled_normal: ''
+    # size_hint: .2, 0.5
+    size_hint: None, None
+    size: 16, 16
+    pos_hint: {'x': .4, 'y': .25}
+
+<SettingsPane>:
+    orientation: "vertical"
+    padding: '10dp', '10dp', '10dp', '10dp'
+    Label:
+        text: "Settings"
+        bold: True
+        color: BLACK
+
+    Label:
+        id: code_length_label
+        text: "Code length: " + str(code_length_slider.value)
+        color: BLACK
+    Slider:
+        id: code_length_slider
+        min: 3
+        max: 7
+        value: 5
+        step: 1
+        on_value: root.on_code_length_slider_change(self)
+        color: BLACK
+        value_track_color: BLACK
+    Label:
+        id: unique_label
+        text: "Use every colour only once:"
+        color: BLACK
+    Switch:
+        id: unique_switch
+        on_active: root.on_switch_active(self)
+        active: True
+
+    Label:
+        id: num_of_colours_label
+        text: "Number of colours: " + str(num_of_colours_slider.value)
+        color: BLACK
+    Slider:
+        id: num_of_colours_slider
+        min: 5
+        max: 12
+        value: 8
+        step: 1
+        on_value: root.on_num_of_colours_slider_change(self)
+        value_track_color: BLACK
+
+<Code>:
+    spacing: "10dp"
+    # size_hint: 2, 1
+    size_hint: None, 1
+    # size: 250, 0
+
+<Guess>:
+    spacing: "10dp"
+    # id: current_guess
+    size_hint: None, 1
+
+<CodeButton>:
+    # background_color: WHITE
+    # margin: "5dp", "5dp", "5dp", "5dp"
+    disabled: True
+    background_normal: ''
+    background_disabled_normal: ''
+    # size_hint: 0.5, 1
+    size_hint: None, None
+    size: 36, 36
+    pos_hint: {'x': .25}
+
+<CodeGuessButton>:
+    on_press: self.select_colour()
+    # size_hint: 0.5, 1
+    size_hint: None, None
+    size: 36, 36
+    pos_hint: {'x': .25}
